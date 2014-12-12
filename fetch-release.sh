@@ -10,8 +10,8 @@ DOWNLOAD_DIR=$(mktemp -d -t meteor-tarballs)
 
 echo Downloading Meteor ${RELEASE} and placing in ${DOWNLOAD_DIR}
 
-curl -SL https://install.meteor.com/ -o ${DOWNLOAD_DIR}/installer-${RELEASE}
-shasum -a 256 ${DOWNLOAD_DIR}/installer-${RELEASE}
+curl -SL https://install.meteor.com/ -o ${DOWNLOAD_DIR}/installer-${RELEASE}.sh
+shasum -a 256 ${DOWNLOAD_DIR}/installer-${RELEASE}.sh
 
 for PLATFORM in os.linux.x86_32 os.linux.x86_64; do
   TARBALL_URL=https://d3sqy0vbqsdhku.cloudfront.net/packages-bootstrap/${RELEASE}/meteor-bootstrap-${PLATFORM}.tar.gz
