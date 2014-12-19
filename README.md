@@ -1,7 +1,8 @@
 # Supported tags and respective `Dockerfile` links
 
 - [`latest` (*latest/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/latest/Dockerfile)
-- [`1.0.1`, `1.0`, `1` (*1.0.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.1/Dockerfile)
+- [`1.0.2`, `1.0`, `1` (*1.0.2/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.2/Dockerfile)
+- [`1.0.1`, (*1.0.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.1/Dockerfile)
 
 # What is Meteor?
 
@@ -36,15 +37,12 @@ downloads.
 
 ## Example: Create a new Meteor app
 
-```bash
-docker run -it --rm -v "$(pwd)":/app danieldent/meteor meteor create
-```
+    docker run -it --rm -v "$(pwd)":/app danieldent/meteor meteor create
 
 ## Example: Meteor in Development Mode (Linux)
 
-```bash
-docker run -it --rm -p 3000:3000 -v "$(pwd)":/app danieldent/meteor
-```
+    docker run -it --rm -p 3000:3000 -v "$(pwd)":/app danieldent/meteor
+
 ## Example: Meteor in Development Mode (boot2docker - OS X/Windows)
 
 [Boot2Docker](http://boot2docker.io/) uses [VirtualBox](https://www.virtualbox.org/)'s Shared Folders for Docker's data
@@ -54,46 +52,40 @@ A small shim is included which re-maps the `.meteor/local` folder back into the 
 enables Meteor to work under boot2docker.  Add `vboxsf-shim` before any `meteor` command that requires its use.
 Using the shim requires the container be allowed the SYS_ADMIN capability.
 
-```bash
-docker run --cap-add SYS_ADMIN -it --rm -p 3000:3000 -v "$(pwd)":/app danieldent/meteor vboxsf-shim meteor
-```
+    docker run --cap-add SYS_ADMIN -it --rm -p 3000:3000 -v "$(pwd)":/app danieldent/meteor vboxsf-shim meteor
 
 You may wish to use a separate docker container for your database. This will allow data to persist across restarts of
 your Meteor container. Unless you use a persistent Docker container, using the shim means that the contents of your
 `.meteor/local` folder do not persist, which is where Meteor stores its build cache as well as the MongoDB database it
 provides in development mode.
 
-```bash
-docker run --name mydb -d mongo
-docker run --cap-add SYS_ADMIN -it --rm -p 3000:3000 --link mydb:db -e "MONGO_URL=mongodb://db" -v "$(pwd)":/app danieldent/meteor vboxsf-shim meteor
-```
+    docker run --name mydb -d mongo
+    docker run --cap-add SYS_ADMIN -it --rm -p 3000:3000 --link mydb:db -e "MONGO_URL=mongodb://db" -v "$(pwd)":/app danieldent/meteor vboxsf-shim meteor
 
 ## Example: Dockerizing your Meteor App for CI/CD/Production
 
 Create a `Dockerfile` for your Meteor app. Place it somewhere where it won't cause problems, such as in `.meteor/Dockerfile`.
-```Dockerfile
-FROM node:0.10-onbuild
-EXPOSE 3000
-ENV PORT 3000
-USER nobody
-```
+
+    FROM node:0.10-onbuild
+    EXPOSE 3000
+    ENV PORT 3000
+    USER nobody
+
 In this example, your Meteor app will run as `nobody` within the Docker container. This ensures the app does not have
 write access to its own files, which could help reduce the impact of certain security issues. It also makes it harder to
 accidentally write code which makes changes to the filesystem.
 
 Dockerize your app:
-```bash
-docker run -it --rm -v "$(pwd)":/app danieldent/meteor demeteorizer -D .meteor/Dockerfile
-```
+
+    docker run -it --rm -v "$(pwd)":/app danieldent/meteor demeteorizer -D .meteor/Dockerfile
+
 Build the Docker image for your app:
-```bash
-docker build -t exampleapp .demeteorized
-```
+
+    docker build -t exampleapp .demeteorized
+
 Run your app in its container, using another Docker container for the MongoDB database:
-```bash
-docker run --name exampleAppDb -d mongo
-docker run -it --rm -p 3000:3000 --link exampleAppDb:db -e "MONGO_URL=mongodb://db" -e "ROOT_URL=http://localhost:3000" exampleapp
-```
+    docker run --name exampleAppDb -d mongo
+    docker run -it --rm -p 3000:3000 --link exampleAppDb:db -e "MONGO_URL=mongodb://db" -e "ROOT_URL=http://localhost:3000" exampleapp
 
 # Issues, Contributing
 
