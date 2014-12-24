@@ -1,7 +1,8 @@
 # Supported tags and respective `Dockerfile` links
 
 - [`latest` (*latest/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/latest/Dockerfile)
-- [`1.0.2`, `1.0`, `1` (*1.0.2/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.2/Dockerfile)
+- [`1.0.2.1`, `1.0`, `1` (*1.0.2.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.2.1/Dockerfile)
+- [`1.0.2`, (*1.0.2/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.2/Dockerfile)
 - [`1.0.1`, (*1.0.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.1/Dockerfile)
 
 # What is Meteor?
