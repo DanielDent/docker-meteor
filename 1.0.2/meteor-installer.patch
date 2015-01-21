@@ -38,7 +38,7 @@
  echo "Downloading Meteor distribution"
 -curl --progress-bar --fail "$TARBALL_URL" | tar -xzf - -C "$INSTALL_TMPDIR" -o
 +INSTALLER_TARBALL=$(mktemp)
-+eval curl --progress-bar --fail "${TARBALL_URL_OVERRIDE:-$TARBALL_URL}" > $INSTALLER_TARBALL
++eval curl -L --progress-bar --fail "${TARBALL_URL_OVERRIDE:-$TARBALL_URL}" > $INSTALLER_TARBALL
 +# If we got passed an explicit version, then we also expect
 +# to be passed that version's checksums.
 +if [ "${METEOR_VERSION:-latest}" != "latest" ]; then

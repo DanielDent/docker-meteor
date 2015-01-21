@@ -1,7 +1,10 @@
 # Supported tags and respective `Dockerfile` links
 
 - [`latest` (*latest/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/latest/Dockerfile)
-- [`1.0.2.1`, `1.0`, `1` (*1.0.2.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.2.1/Dockerfile)
+- [`onbuild` (*onbuild/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/onbuild/Dockerfile)
+- [`1.0.3.1`, `1.0`, `1` (*1.0.3.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.3.1/Dockerfile)
+- [`1.0.3.1-onbuild`, `1.0-onbuild`, `1-onbuild` (*1.0.3.1-onbuild/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.3.1-onbuild/Dockerfile)
+- [`1.0.2.1`, (*1.0.2.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.2.1/Dockerfile)
 - [`1.0.2`, (*1.0.2/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.2/Dockerfile)
 - [`1.0.1`, (*1.0.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.1/Dockerfile)
 
@@ -15,24 +18,27 @@ With Meteor you write apps:
 * that send data over the wire, rather than HTML
 * using your choice of popular open-source libraries
 
-Documentation is available at http://docs.meteor.com/
+Documentation is available at [http://docs.meteor.com/](http://docs.meteor.com/).
 
 # What's included in these images?
 
-[Meteor](https://www.meteor.com/), a fork of [demeteorizer](https://github.com/DanielDent/demeteorizer) with Dockerfile
-support, and a [small shim](https://github.com/DanielDent/docker-meteor/blob/master/latest/vboxsf-shim.sh) that
+[Meteor](https://www.meteor.com/) and a [small shim](https://github.com/DanielDent/docker-meteor/blob/master/latest/vboxsf-shim.sh) that
 addresses a compatibility issue with boot2docker.
+
+A fork of [demeteorizer](https://github.com/DanielDent/demeteorizer) with a patch for Dockerfile support remains
+included in this release. Support has been deprecated and demeteorizer will be dropped from future releases.
+The patch has not been merged upstream and demeteorizer is not required with the currently documented workflow.
 
 # Why use these images?
 
 * To install a packaged, specific version of Meteor.
-* To dockerize a Meteor app for your Continuous Integration/Continuous Delivery/Production environments.
+* To Dockerize a Meteor app for your Continuous Integration/Continuous Delivery/Production environments.
 * To have a repeatable and easily maintained development environment.
 * To do Meteor development on Windows (using boot2docker).
 
-The `latest` tag builds whatever Meteor publishes at https://install.meteor.com/, as long as the install script does
-not change. Images tagged for a specific Meteor version checksum both the installer and the tarball the installer
-downloads.
+The `latest` tag builds whatever Meteor publishes at [https://install.meteor.com/](https://install.meteor.com/), as long
+as the install script does not change. Images tagged for a specific Meteor version checksum both the installer and the
+tarball the installer downloads.
 
 # How to use these images
 
@@ -63,30 +69,42 @@ provides in development mode.
     docker run --name mydb -d mongo
     docker run --cap-add SYS_ADMIN -it --rm -p 3000:3000 --link mydb:db -e "MONGO_URL=mongodb://db" -v "$(pwd)":/app danieldent/meteor vboxsf-shim meteor
 
-## Example: Dockerizing your Meteor App for CI/CD/Production
+## Example: Dockerizing your Meteor App for CI/CD/Production Builds
 
-Create a `Dockerfile` for your Meteor app. Place it somewhere where it won't cause problems, such as in `.meteor/Dockerfile`.
+Create a `.dockerignore` file in your Meteor source directory to exclude Meteor's development build cache.
 
-    FROM node:0.10-onbuild
-    EXPOSE 3000
-    ENV PORT 3000
-    USER nobody
+    .meteor/local
 
-In this example, your Meteor app will run as `nobody` within the Docker container. This ensures the app does not have
-write access to its own files, which could help reduce the impact of certain security issues. It also makes it harder to
-accidentally write code which makes changes to the filesystem.
+Create a `Dockerfile` for your Meteor app and place it in your Meteor source directory. Use one of the onbuild tags.
 
-Dockerize your app:
+    FROM danieldent/meteor:onbuild
 
-    docker run -it --rm -v "$(pwd)":/app danieldent/meteor demeteorizer -D .meteor/Dockerfile
+Build the Docker image for your app (assumes you are currently in the Meteor source directory):
 
-Build the Docker image for your app:
-
-    docker build -t exampleapp .demeteorized
+    docker build -t exampleapp .
 
 Run your app in its container, using another Docker container for the MongoDB database:
+
     docker run --name exampleAppDb -d mongo
     docker run -it --rm -p 3000:3000 --link exampleAppDb:db -e "MONGO_URL=mongodb://db" -e "ROOT_URL=http://localhost:3000" exampleapp
+
+# Defaults
+
+By default, your Meteor app will run as `nobody` within the Docker container. This ensures the app does not have
+write access to its own files, which could help reduce the impact of certain security issues. It also makes it harder to
+accidentally write code which makes changes to the filesystem. Port 3000 will be exposed by default. Here's a
+`Dockerfile` which changes the defaults. It usually shouldn't be necessary to change the port on which your Meteor app
+listens - Docker's port mapping features allows the port used *inside* the container to be different than the port
+which is exposed *outside* the container.
+
+    FROM danieldent/meteor:onbuild
+    EXPOSE 4000
+    ENV PORT 4000
+    USER root
+
+While it's possible to set additional variables as part of the build (such as `MONGO_URL`, `ROOT_URL`, or
+`METEOR_SETTINGS`), it may be a better choice to [pass configuration that is likely to vary between deployments of the
+application as runtime environment variables](http://12factor.net/config).
 
 # Issues, Contributing
 
