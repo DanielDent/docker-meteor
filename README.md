@@ -2,8 +2,10 @@
 
 - [`latest` (*latest/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/latest/Dockerfile)
 - [`onbuild` (*onbuild/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/onbuild/Dockerfile)
-- [`1.0.3.1`, `1.0`, `1` (*1.0.3.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.3.1/Dockerfile)
-- [`1.0.3.1-onbuild`, `1.0-onbuild`, `1-onbuild` (*1.0.3.1-onbuild/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.3.1-onbuild/Dockerfile)
+- [`1.0.3.2`, `1.0`, `1` (*1.0.3.2/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.3.2/Dockerfile)
+- [`1.0.3.2-onbuild`, `1.0-onbuild`, `1-onbuild` (*1.0.3.2-onbuild/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.3.2-onbuild/Dockerfile)
+- [`1.0.3.1`, (*1.0.3.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.3.1/Dockerfile)
+- [`1.0.3.1-onbuild`, (*1.0.3.1-onbuild/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.3.1-onbuild/Dockerfile)
 - [`1.0.2.1`, (*1.0.2.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.2.1/Dockerfile)
 - [`1.0.2`, (*1.0.2/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.2/Dockerfile)
 - [`1.0.1`, (*1.0.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.1/Dockerfile)
@@ -113,7 +115,7 @@ Please file a pull request or create a new issue for problems or potential impro
 
 # License
 
-Copyright 2014 [Daniel Dent](https://www.danieldent.com/).
+Copyright 2014-2015 [Daniel Dent](https://www.danieldent.com/).
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use these files except in compliance with the License.

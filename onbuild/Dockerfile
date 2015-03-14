@@ -1,4 +1,5 @@
 FROM danieldent/meteor:latest
+MAINTAINER Daniel Dent (https://www.danieldent.com/)
 ONBUILD COPY . /opt/src
 ONBUILD WORKDIR /opt/src
 ONBUILD RUN meteor build .. --directory \

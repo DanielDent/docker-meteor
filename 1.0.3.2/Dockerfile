@@ -1,11 +1,10 @@
 FROM node:0.10
 MAINTAINER Daniel Dent (https://www.danieldent.com/)
 
-ENV METEOR_VERSION 1.0.3.1
+ENV METEOR_VERSION 1.0.3.2
 ENV METEOR_INSTALLER_SHA256 4020ef4d3bc257cd570b5b2d49e3490699c52d0fd98453e29b7addfbdfba9c80
-ENV METEOR_LINUX_X86_32_SHA256 d6260e20aa723109d1ed0be4bbc260cf33322110e1075e230587d29e8c327be2
-ENV METEOR_LINUX_X86_64_SHA256 d732cb54215bde3f08002b49364d45f827cf25db291608f8a625d0f7e70ca97e
-ENV TARBALL_URL_OVERRIDE https://github.com/DanielDent/docker-meteor/releases/download/v${RELEASE}/meteor-bootstrap-${PLATFORM}-${RELEASE}.tar.gz
+ENV METEOR_LINUX_X86_32_SHA256 4011b4584c459d0c5f234548adc6b32ff6137404b73ed374905aef99159f38cf
+ENV METEOR_LINUX_X86_64_SHA256 939c992a871670a5e5bf65a6d089a4c1e519ee186cf7f20a45c71395ab1a770c
 
 # 1. Download & verify the meteor installer.
 # 2. Patch it to validate the meteor tarball's checksums.
@@ -20,11 +19,6 @@ RUN curl -SL https://install.meteor.com/ -o /tmp/meteor/inst \
     && chmod +x /tmp/meteor/inst \
     && /tmp/meteor/inst \
     && rm -rf /tmp/meteor
-
-# 4. Install demeteorizer (using my fork of demeteorizer until Dockerfile support is merged upstream)
-
-RUN npm install -g DanielDent/demeteorizer#v2.1.0 \
-    && npm cache clear
 
 VOLUME /app
 WORKDIR /app

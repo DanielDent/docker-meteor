@@ -1,4 +1,4 @@
-FROM danieldent/meteor:1.0.3.1
+FROM danieldent/meteor:1.0.3.2
 MAINTAINER Daniel Dent (https://www.danieldent.com/)
 ONBUILD COPY . /opt/src
 ONBUILD WORKDIR /opt/src
