@@ -1,0 +1,55 @@
+--- meteor-installer	2014-12-10 15:22:12.232084632 -0800
++++ meteor-installer.new	2014-12-10 15:27:20.532084632 -0800
+@@ -31,6 +31,11 @@
+ ## know what shell the user has. Debian uses 'dash' for 'sh', for
+ ## example.
+ 
++# If METEOR_VERSION is set, we want to install that instead.
++if [ "${METEOR_VERSION}" != "latest" ] ; then
++  RELEASE="${METEOR_VERSION:-$RELEASE}"
++fi
++
+ PREFIX="/usr/local"
+ 
+ set -e
+@@ -41,7 +46,7 @@
+ 
+ 
+ UNAME=$(uname)
+-if [ "$UNAME" != "Linux" -a "$UNAME" != "Darwin" ] ; then
++if [ "$UNAME" != "Linux" ] ; then
+     echo "Sorry, this OS is not supported yet."
+     exit 1
+ fi
+@@ -73,8 +78,10 @@
+   LINUX_ARCH=$(uname -m)
+   if [ "${LINUX_ARCH}" = "i686" ] ; then
+     PLATFORM="os.linux.x86_32"
++    TARBALL_CHECKSUM="${METEOR_LINUX_X86_32_SHA256:-}"
+   elif [ "${LINUX_ARCH}" = "x86_64" ] ; then
+     PLATFORM="os.linux.x86_64"
++    TARBALL_CHECKSUM="${METEOR_LINUX_X86_64_SHA256:-}"
+   else
+     echo "Unusable architecture: ${LINUX_ARCH}"
+     echo "Meteor only supports i686 and x86_64 for now."
+@@ -118,7 +125,19 @@
+ rm -rf "$INSTALL_TMPDIR"
+ mkdir "$INSTALL_TMPDIR"
+ echo "Downloading Meteor distribution"
+-curl --progress-bar --fail "$TARBALL_URL" | tar -xzf - -C "$INSTALL_TMPDIR" -o
++INSTALLER_TARBALL=$(mktemp)
++eval curl -L --progress-bar --fail "${TARBALL_URL_OVERRIDE:-$TARBALL_URL}" > $INSTALLER_TARBALL
++# If we got passed an explicit version, then we also expect
++# to be passed that version's checksums.
++if [ "${METEOR_VERSION:-latest}" != "latest" ]; then
++  if ! echo "$TARBALL_CHECKSUM $INSTALLER_TARBALL" | sha256sum -c; then
++    rm -rf "${INSTALLER_TARBALL}"
++    echo "Installer tarball checksum failed."
++    exit 1
++  fi
++fi  
++tar -xzf $INSTALLER_TARBALL -C "$INSTALL_TMPDIR" -o
++rm -rf "${INSTALLER_TARBALL}"
+ # bomb out if it didn't work, eg no net
+ test -x "${INSTALL_TMPDIR}/.meteor/meteor"
+ mv "${INSTALL_TMPDIR}/.meteor" "$HOME"

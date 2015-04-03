@@ -1,11 +1,10 @@
 FROM node:0.10
 MAINTAINER Daniel Dent (https://www.danieldent.com/)
 
-ENV METEOR_VERSION 1.1
+ENV METEOR_VERSION 1.1.0.1
 ENV METEOR_INSTALLER_SHA256 4020ef4d3bc257cd570b5b2d49e3490699c52d0fd98453e29b7addfbdfba9c80
-ENV METEOR_LINUX_X86_32_SHA256 a4eb24501ceeb73739125f45cb72fda57f2c2f3462a7d2bbf6424ab231e89be7
-ENV METEOR_LINUX_X86_64_SHA256 93a95576ae1b41bc7d9808dd558e7e397d9ee9cab3b96e35566fc3c291062a84
-ENV TARBALL_URL_OVERRIDE https://github.com/DanielDent/docker-meteor/releases/download/v${RELEASE}/meteor-bootstrap-${PLATFORM}-${RELEASE}.tar.gz
+ENV METEOR_LINUX_X86_32_SHA256 9f3cea0c05a8c4f6b8a83b2f61407f41b322d172bc7c68603e22f6e13d95b7a1
+ENV METEOR_LINUX_X86_64_SHA256 f8812ed11902b8719b5e70ea3315d9f97a07f9042152a69c33c741d6c1430482
 
 # 1. Download & verify the meteor installer.
 # 2. Patch it to validate the meteor tarball's checksums.
