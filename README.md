@@ -2,8 +2,10 @@
 
 - [`latest` (*latest/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/latest/Dockerfile)
 - [`onbuild` (*onbuild/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/onbuild/Dockerfile)
-- [`1.1.0.1`, `1` (*1.1.0.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.1.0.1/Dockerfile)
-- [`1.1.0.1-onbuild`, `1-onbuild` (*1.1.0.1-onbuild/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.1.0.1-onbuild/Dockerfile)
+- [`1.1.0.2`, `1` (*1.1.0.2/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.1.0.2/Dockerfile)
+- [`1.1.0.2-onbuild`, `1-onbuild` (*1.1.0.2-onbuild/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.1.0.2-onbuild/Dockerfile)
+- [`1.1.0.1`, (*1.1.0.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.1.0.1/Dockerfile)
+- [`1.1.0.1-onbuild`, (*1.1.0.1-onbuild/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.1.0.1-onbuild/Dockerfile)
 - [`1.1`, (*1.1/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.1/Dockerfile)
 - [`1.1-onbuild`, (*1.1-onbuild/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.1-onbuild/Dockerfile)
 - [`1.0.5`, `1.0`, (*1.0.5/Dockerfile*)](https://github.com/DanielDent/docker-meteor/blob/master/1.0.5/Dockerfile)
